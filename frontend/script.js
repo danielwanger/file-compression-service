@@ -1,3 +1,5 @@
+const API_URL = "https://file-compression-service.onrender.com";
+
 async function compress() {
     const file = document.getElementById("fileInput").files[0];
     const algorithm = document.getElementById("algorithm").value;
@@ -13,7 +15,7 @@ async function compress() {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch(`http://127.0.0.1:8000/compress/${algorithm}`, {
+    const response = await fetch(`${API_URL}/compress/${algorithm}`, {
         method: "POST",
         body: formData,
     });
@@ -48,7 +50,7 @@ async function decompress() {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch(`http://127.0.0.1:8000/decompress/${algorithm}`, {
+    const response = await fetch(`${API_URL}/decompress/${algorithm}`, {
         method: "POST",
         body: formData,
     });
