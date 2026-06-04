@@ -1,8 +1,15 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import Response
+from fastapi.middleware.cors import CORSMiddleware
 from compressor import compress_gzip, compress_bz2, compress_lzma, decompress_gzip, decompress_bz2, decompress_lzma
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 COMPRESS_ALGORITHMS = {
     "gzip": (compress_gzip, "application/gzip", ".gz"),
