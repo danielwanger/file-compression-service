@@ -11,4 +11,4 @@ Stateless file compression API (supporting gzip, bz2, lzma). Files are uploaded 
 ## Tech Stack
 - Backend: Python, FastAPI
 - Frontend: HTML/ CSS/ JavaScript
-- Deployment: Render (backend), Netlify (frontend)
+- Deployment: Render (backend), GitHub Pages (frontend)
