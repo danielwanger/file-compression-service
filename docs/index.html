@@ -1,26 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Compression Service</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compress — file compression service</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>File Compression Service</h1>
 
-    <input type="file" id="fileInput">
-    
-    <select id="algorithm">
-        <option value="gzip">gzip</option>
-        <option value="bz2">bz2</option>
-        <option value="lzma">lzma</option>
-    </select>
+  <main class="card">
+    <header class="card__header">
+      <span class="eyebrow">gzip · bz2 · lzma</span>
+      <h1>Compress</h1>
+      <p class="sub">Runs in memory. Nothing you upload is written to disk or kept.</p>
+    </header>
 
-    <button onclick="compress()">Compress</button>
-    <button onclick="decompress()">Decompress</button>
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a file">
+      <input type="file" id="fileInput" hidden>
+      <div class="dropzone__idle" id="dzIdle">
+        <svg class="dropzone__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M12 3v12M12 3l-4 4M12 3l4 4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16" stroke-linecap="round"/>
+        </svg>
+        <p><strong>Drop a file</strong> or click to browse</p>
+      </div>
+      <div class="dropzone__file" id="dzFile" hidden>
+        <span class="filename" id="fileName"></span>
+        <span class="filesize" id="fileSize"></span>
+        <button type="button" class="clear" id="clearFile" aria-label="Remove file">✕</button>
+      </div>
+    </div>
 
-    <p id="status"></p>
+    <div class="field">
+      <span class="field__label">Algorithm</span>
+      <div class="segmented" id="algorithmGroup" role="radiogroup" aria-label="Algorithm">
+        <button type="button" class="segmented__opt is-active" data-value="gzip" role="radio" aria-checked="true">gzip</button>
+        <button type="button" class="segmented__opt" data-value="bz2" role="radio" aria-checked="false">bz2</button>
+        <button type="button" class="segmented__opt" data-value="lzma" role="radio" aria-checked="false">lzma</button>
+      </div>
+    </div>
 
-    <script src="script.js"></script>
+    <div class="actions">
+      <button type="button" class="btn btn--primary" id="compressBtn" disabled>Compress</button>
+      <button type="button" class="btn btn--ghost" id="decompressBtn" disabled>Decompress</button>
+    </div>
+
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+
+    <div class="result" id="result" hidden>
+      <div class="result__bar-track">
+        <div class="result__bar-fill" id="resultBarFill"></div>
+      </div>
+      <div class="result__row">
+        <div class="result__stat">
+          <span class="result__label">Original</span>
+          <span class="result__value" id="statOriginal">—</span>
+        </div>
+        <div class="result__stat">
+          <span class="result__label">Compressed</span>
+          <span class="result__value" id="statCompressed">—</span>
+        </div>
+        <div class="result__stat result__stat--ratio">
+          <span class="result__label">Saved</span>
+          <span class="result__value result__value--big" id="statRatio">—</span>
+        </div>
+      </div>
+      <a class="btn btn--download" id="downloadLink" download>Download result</a>
+    </div>
+  </main>
+
+  <p class="footnote">Files never touch a disk — compressed and held in memory only, for this request.</p>
+
+<script src="script.js"></script>
 </body>
 </html>
